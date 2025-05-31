@@ -1,0 +1,25 @@
+1. Create a "FoodItem" object that stores:
+- The name of the item (e.g., “Milk”)
+- The category (e.g., carbs, protein)
+- A list of nutrients it contains (e.g., Vitamin C, Iron)
+- The expiration date
+- Whether it is perishable or not
+
+2. When the user enters a new item:
+- Create a new FoodItem object with the given information.
+- Store it in the hash map.
+- Insert its expiration date (along with its name and a unique ID) into the min-heap.
+
+3. Automatically Remove Expired Items
+- Every time the app starts or the inventory is viewed:
+-Get the current date.
+- While the top item in the heap is expired:
+- Remove it from the heap.
+- Also remove it from the hash map.
+
+4. Show Which Items Should Be Distributed Next
+- When the user asks for items to distribute:
+- Look through the heap without changing it.
+- List all items that have not expired yet, starting with the earliest expiration dates.
+- Return the list of food names in the right order.
+
