@@ -1,4 +1,4 @@
-from beneficiary import Beneficiary
+from .beneficiary import Beneficiary
 
 class BeneficiaryManager:
     def __init__(self):
@@ -20,7 +20,7 @@ class BeneficiaryManager:
 
 manager = BeneficiaryManager()
 
-juan = Beneficiary("001", "Mar Joseph Bijer")
+juan = Beneficiary("001", "Mar Joseph Bijer", "09198868996")
     
 # example hash table
 # class HashTable:
