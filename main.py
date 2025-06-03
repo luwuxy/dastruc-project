@@ -34,9 +34,14 @@ def inventory_menu():
 
 def beneficiary_menu():
    while True:
-      print("Beneficiary Menu")
+      print("""
+Beneficiary Menu
+1. Add a beneficiary
+2. 
+            """)
       # more to be added
 
       option = input("Please choose an option: ")
 
-main_menu()
+# main_menu()
+beneficiary_menu()
