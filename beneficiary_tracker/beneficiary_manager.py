@@ -19,8 +19,6 @@ class BeneficiaryManager:
             print(beneficiary)
 
 manager = BeneficiaryManager()
-
-juan = Beneficiary("001", "Mar Joseph Bijer", "09198868996")
     
 # example hash table
 # class HashTable:

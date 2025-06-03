@@ -5,3 +5,6 @@ class Beneficiary:
         self.name = name
         self.contact_info = contact_info
         self.dietary_needs = dietary_needs
+    
+    def __str__(self):
+        return f"ID: {self.id}\n Full Name: {self.name}\n Contact Info: {self.contact_info}"
