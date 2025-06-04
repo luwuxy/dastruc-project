@@ -19,20 +19,3 @@ class BeneficiaryManager:
             print(beneficiary)
 
 manager = BeneficiaryManager()
-    
-# example hash table
-# class HashTable:
-#     def __init__(self):
-#         # Under the hood this is a Python dict
-#         self._table = {}
-
-#     def add(self, key, value):
-#         """Insert or update the value for this key."""
-#         self._table[key] = value
-
-#     def get(self, key):
-#         """
-#         Retrieve the value for this key.
-#         Returns None if the key is not present.
-#         """
-#         return self._table.get(key)

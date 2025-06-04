@@ -13,10 +13,9 @@ Welcome to the Food Bank System!
       option = input("Please choose an option: ")
 
       if option == "1":
-         print("Chose 1")
          inventory_menu()
       elif option == "2":
-         print("Chose 2")
+         beneficiary_menu()
       elif option == "3":
          print("Chose 3")
       elif option == "4":
@@ -43,5 +42,4 @@ Beneficiary Menu
 
       option = input("Please choose an option: ")
 
-# main_menu()
-beneficiary_menu()
+main_menu()
