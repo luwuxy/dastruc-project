@@ -1,5 +1,3 @@
-from .beneficiary import Beneficiary
-
 class BeneficiaryManager:
     def __init__(self):
         self.beneficiaries = {}
@@ -14,8 +12,8 @@ class BeneficiaryManager:
         if beneficiary_id in self.beneficiaries:
             del self.beneficiaries[beneficiary_id]
     
-    def show(self):
+    def show_all(self):
+        if not self.beneficiaries:
+            print("No beneficiaries found.")
         for beneficiary in self.beneficiaries.values():
-            print(beneficiary)
-
-manager = BeneficiaryManager()
+            print(beneficiary, "\n")
