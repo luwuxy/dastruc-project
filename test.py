@@ -19,4 +19,4 @@ print("Listing all beneficiaries:\n")
 manager.show_all()
 
 print("Printing individual beneficiary:\n")
-print(manager.get("B001"))
+print(manager.get("User One"))
