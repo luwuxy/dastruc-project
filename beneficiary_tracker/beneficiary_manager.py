@@ -17,3 +17,8 @@ class BeneficiaryManager:
             print("No beneficiaries found.")
         for beneficiary in self.beneficiaries.values():
             print(beneficiary, "\n")
+
+    def search(self, value):
+        value = value.lower()
+        results = []
+        # will add more to this
