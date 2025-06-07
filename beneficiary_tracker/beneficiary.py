@@ -1,10 +1,19 @@
 class Beneficiary:
-    # Dietary needs are optional.
-    def __init__(self, beneficiary_id, name, contact_info, dietary_needs = None):
+    def __init__(self, beneficiary_id, name, contact_info, needs):
         self.id = beneficiary_id
         self.name = name
         self.contact_info = contact_info
-        self.dietary_needs = dietary_needs
-    
+        self.needs = {
+            "calories": needs["calories"],
+            "protein": needs["protein"],
+            "vitamins": needs["vitamins"]
+        }
+
     def __str__(self):
-        return f"ID: {self.id}\n Full Name: {self.name}\n Contact Info: {self.contact_info}"
+        return (f"Beneficiary ID: {self.id}\n"
+                f"Name: {self.name}\n"
+                f"Contact Info: {self.contact_info}\n"
+                f"Dietary Needs:\n"
+                f"- Calories: {self.needs["calories"]}\n"
+                f"- Protein: {self.needs["protein"]}\n"
+                f"- Vitamins: {", ".join(self.needs["vitamins"])}")
