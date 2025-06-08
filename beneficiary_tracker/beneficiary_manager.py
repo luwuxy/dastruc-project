@@ -22,4 +22,12 @@ class BeneficiaryManager:
     def search(self, value):
         value = value.lower()
         results = []
-        # will add more to this
+        for b in self.beneficiaries.values():
+            if (value in b.id.lower() or
+                value in b.name.lower() or
+                value in b.contact_info.lower() or
+                value in str(b.needs["calories"]).lower() or
+                value in str(b.needs["protein"]).lower() or
+                any(value in v.lower() for v in b.needs["vitamins"])):
+                results.append(b)
+        return results
