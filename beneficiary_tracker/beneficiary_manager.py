@@ -15,8 +15,9 @@ class BeneficiaryManager:
     def show_all(self):
         if not self.beneficiaries:
             print("No beneficiaries found.")
-        for beneficiary in self.beneficiaries.values():
-            print(beneficiary, "\n")
+        else: 
+            for beneficiary in self.beneficiaries.values():
+                print(beneficiary, "\n")
 
     def search(self, value):
         value = value.lower()
