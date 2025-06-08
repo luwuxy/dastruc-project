@@ -72,7 +72,7 @@ Beneficiary Menu
 
 
 def get_input():
-    # I'm planning on making it so that it automatically generated the ID, I'll leave this as is for now
+    # I'm planning on making it so that it automatically generates the ID, I'll leave this as is for now
     beneficiary_id = input("Input beneficiary ID: ")
     name = input("Input beneficiary name: ")
     contact_info = input("Input contact info: ")
