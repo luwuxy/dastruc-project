@@ -8,11 +8,13 @@ def main_menu():
     while True:
         print("""
 [==================================]
+              
 Welcome to the Food Bank System!
 1. Manage Inventory
 2. Manage Beneficiaries
 3. Distribute Food
 4. Exit Program
+              
 [==================================]""")
         option = input("Please choose an option: ")
 
@@ -31,8 +33,8 @@ Welcome to the Food Bank System!
 
 def inventory_menu():
     while True:
-        print("Inventory Menu")
-        # more to be added
+        # put your inventory menu here, mas maganda if ibundle na natin lahat dito sa
+        # main class yung interface para mas malinis yung ibang files. - Mar
 
         option = input("Please choose an option: ")
 
@@ -41,11 +43,14 @@ def beneficiary_menu():
     while True:
         print("""
 [==================================]
+              
 Beneficiary Menu
 1. Add beneficiary
 2. Remove beneficiary
 3. List all beneficiaries
-4. Go back
+4. Search for beneficiary
+5. Go back
+
 [==================================]""")
 
         option = input("Please choose an option: ")
@@ -68,6 +73,18 @@ Beneficiary Menu
                 if option == "":
                     break
         elif option == "4":
+            while True:
+                search_value = input("Search beneficiaries (enter blank value to cancel): ")
+                results = manager.search(search_value)
+
+                if search_value == "":
+                    break
+                elif results:
+                    for b in results:
+                        print(b, "\n\n", "-----", "\n")
+                else:
+                    print("No matching beneficiaries were found.")
+        elif option == "5":
             break
 
 
