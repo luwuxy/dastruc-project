@@ -61,7 +61,7 @@ class BeneficiaryManager:
         print(tabulate(table, headers=headers, tablefmt="grid"), "\n")
     
     def save_data(self, filename):
-        data = {bid: b.to_dict() for bid, b in self.beneficiaries.items()}
+        data = {beneficiary_id: beneficiary.to_dict() for beneficiary_id, beneficiary in self.beneficiaries.items()}
         with open(filename, "w") as f:
             json.dump(data, f, indent=4)
 
@@ -69,7 +69,7 @@ class BeneficiaryManager:
         try:
             with open(filename, "r") as f:
                 data = json.load(f)
-                for bid, b_data in data.items():
-                    self.beneficiaries[bid] = Beneficiary.from_dict(b_data)
+                for beneficiary_id, beneficiary_data in data.items():
+                    self.beneficiaries[beneficiary_id] = Beneficiary.from_dict(beneficiary_data)
         except FileNotFoundError:
             print("Beneficiary file not found. Starting fresh.")
