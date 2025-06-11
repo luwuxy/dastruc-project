@@ -10,13 +10,11 @@ def main_menu():
     while True:
         print("""
 [==================================]
-              
 Welcome to the Food Bank System!
 1. Manage Inventory
 2. Manage Beneficiaries
 3. Distribute Food
 4. Exit Program
-              
 [==================================]""")
         option = input("Please choose an option: ")
 
@@ -57,7 +55,6 @@ Beneficiary Menu
 
         option = input("Please choose an option: ")
         print("")
-        print("====================================\n")
 
         if option == "1":
             manager.add(get_input())
