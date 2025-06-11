@@ -1,3 +1,6 @@
+import json
+from .beneficiary import Beneficiary
+
 class BeneficiaryManager:
     def __init__(self):
         self.beneficiaries = {}
@@ -30,4 +33,18 @@ class BeneficiaryManager:
                 value in str(b.needs["protein"]).lower() or
                 any(value in v.lower() for v in b.needs["vitamins"])):
                 results.append(b)
-        return results
+        return 
+    
+    def save_data(self, filename):
+        data = {bid: b.to_dict() for bid, b in self.beneficiaries.items()}
+        with open(filename, "w") as f:
+            json.dump(data, f, indent=4)
+
+    def load_data(self, filename):
+        try:
+            with open(filename, "r") as f:
+                data = json.load(f)
+                for bid, b_data in data.items():
+                    self.beneficiaries[bid] = Beneficiary.from_dict(b_data)
+        except FileNotFoundError:
+            print("Beneficiary file not found. Starting fresh.")
