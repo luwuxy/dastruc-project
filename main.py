@@ -5,6 +5,8 @@ manager = BeneficiaryManager()
 
 
 def main_menu():
+    manager.load_data("beneficiaries.json")
+
     while True:
         print("""
 [==================================]
@@ -29,6 +31,8 @@ Welcome to the Food Bank System!
             break
         else:
             print("That's not a valid option!")
+    
+    manager.save_data("beneficiaries.json")
 
 
 def inventory_menu():
@@ -111,4 +115,5 @@ def get_input():
 
 
 # main call function
-main_menu()
+if __name__ == "__main__":
+    main_menu()
