@@ -38,13 +38,17 @@ class BeneficiaryManager:
         value = value.lower()
         results = []
         for b in self.beneficiaries.values():
-            if (value in b.id.lower() or
-                value in b.name.lower() or
-                value in b.contact_info.lower() or
-                value in str(b.needs["calories"]).lower() or
-                value in str(b.needs["protein"]).lower() or
-                any(value in v.lower() for v in b.needs["vitamins"])):
+            if (value == b.id.lower() or
+                value == b.name.lower() or
+                value == b.contact_info.lower() or
+                value == str(b.needs["calories"]).lower() or
+                value == str(b.needs["protein"]).lower() or
+                any(value == v.lower() for v in b.needs["vitamins"])):
                 results.append(b)
+        
+        if not results:
+            print(f'No beneficiaries matched the search value {value}.')
+            return
 
         table = []
         for beneficiary in results:
