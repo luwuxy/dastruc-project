@@ -9,6 +9,23 @@ class Beneficiary:
             "vitamins": needs["vitamins"]
         }
 
+    def to_dict(self):
+        return {
+            "beneficiary_id": self.id,
+            "name": self.name,
+            "contact_info": self.contact_info,
+            "dietary_needs": self.needs
+        }
+    
+    @staticmethod
+    def from_dict(data):
+        return Beneficiary(
+            data["beneficiary_id"],
+            data["name"],
+            data["contact_info"],
+            data["dietary_needs"],
+        )
+
     def __str__(self):
         return (f"Beneficiary ID: {self.id}\n"
                 f"Name: {self.name}\n"
