@@ -1,5 +1,6 @@
 import json
 from .beneficiary import Beneficiary
+from tabulate import tabulate
 
 class BeneficiaryManager:
     def __init__(self):
@@ -19,8 +20,19 @@ class BeneficiaryManager:
         if not self.beneficiaries:
             print("No beneficiaries found.")
         else: 
+            table = []
             for beneficiary in self.beneficiaries.values():
-                print(beneficiary, "\n")
+                table.append([
+                    beneficiary.id,
+                    beneficiary.name,
+                    beneficiary.contact_info,
+                    beneficiary.needs["calories"],
+                    beneficiary.needs["protein"],
+                    ", ".join(beneficiary.needs["vitamins"])
+                ])
+            
+            headers = ["ID", "Name", "Contact Info", "Required Calories", "Required Protein", "Required Vitamins"]
+            print(tabulate(table, headers=headers, tablefmt="grid"), "\n")
 
     def search(self, value):
         value = value.lower()
@@ -33,7 +45,20 @@ class BeneficiaryManager:
                 value in str(b.needs["protein"]).lower() or
                 any(value in v.lower() for v in b.needs["vitamins"])):
                 results.append(b)
-        return 
+
+        table = []
+        for beneficiary in results:
+                table.append([
+                    beneficiary.id,
+                    beneficiary.name,
+                    beneficiary.contact_info,
+                    beneficiary.needs["calories"],
+                    beneficiary.needs["protein"],
+                    ", ".join(beneficiary.needs["vitamins"])
+                ])
+        
+        headers = ["ID", "Name", "Contact Info", "Required Calories", "Required Protein", "Required Vitamins"]
+        print(tabulate(table, headers=headers, tablefmt="grid"), "\n")
     
     def save_data(self, filename):
         data = {bid: b.to_dict() for bid, b in self.beneficiaries.items()}
