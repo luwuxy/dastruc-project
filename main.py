@@ -5,16 +5,16 @@ manager = BeneficiaryManager()
 
 
 def main_menu():
+    manager.load_data("beneficiaries.json")
+
     while True:
         print("""
 [==================================]
-              
 Welcome to the Food Bank System!
 1. Manage Inventory
 2. Manage Beneficiaries
 3. Distribute Food
 4. Exit Program
-              
 [==================================]""")
         option = input("Please choose an option: ")
 
@@ -29,6 +29,8 @@ Welcome to the Food Bank System!
             break
         else:
             print("That's not a valid option!")
+    
+    manager.save_data("beneficiaries.json")
 
 
 def inventory_menu():
@@ -42,20 +44,17 @@ def inventory_menu():
 def beneficiary_menu():
     while True:
         print("""
-[==================================]
-              
+[==================================]       
 Beneficiary Menu
 1. Add beneficiary
 2. Remove beneficiary
 3. List all beneficiaries
 4. Search for beneficiary
 5. Go back
-
-[==================================]""")
+[==================================]\n""")
 
         option = input("Please choose an option: ")
         print("")
-        print("====================================")
 
         if option == "1":
             manager.add(get_input())
@@ -70,20 +69,17 @@ Beneficiary Menu
                 manager.show_all()
 
                 option = input("Press enter to go back.")
-                if option == "":
-                    break
+                break
         elif option == "4":
             while True:
                 search_value = input("Search beneficiaries (enter blank value to cancel): ")
-                results = manager.search(search_value)
 
                 if search_value == "":
                     break
-                elif results:
-                    for b in results:
-                        print(b, "\n\n", "-----", "\n")
+                elif search_value:
+                    manager.search(search_value)
                 else:
-                    print("No matching beneficiaries were found.")
+                    print(f"No beneficiary matches {search_value}.")
         elif option == "5":
             break
 
@@ -111,4 +107,5 @@ def get_input():
 
 
 # main call function
-main_menu()
+if __name__ == "__main__":
+    main_menu()
