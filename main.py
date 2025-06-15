@@ -85,15 +85,35 @@ Beneficiary Menu
 
 
 def get_input():
-    # I'm planning on making it so that it automatically generates the ID, I'll leave this as is for now
-    beneficiary_id = input("Input beneficiary ID: ")
-    name = input("Input beneficiary name: ")
-    contact_info = input("Input contact info: ")
+    # returns error if the user gives a blank input. ".strip() gets rid of any leading and trailing whitespace."
+    def require_input(prompt):
+        while True:
+            value = input(prompt).strip()
+            if value:
+                return value
+            else:
+                print("No input was given! Please enter a value.")
+
+    name = require_input("Input beneficiary name: ")
+    contact_info = require_input("Input contact info: ")
 
     print("Input dietary needs: ")
-    calories = input("- Required Calories: ")
-    protein = input("- Required Protein: ")
-    vitamins = input("- Required Vitamins (separated by comma): ")
+    # get input from user. if input is not an integer, it will return an exception, then repeat.
+    while True:
+        try:
+            calories = int(require_input("- Required Calories: "))
+            break
+        except ValueError:
+            print("Calories must be a number!")
+    # same as above.
+    while True:
+        try:
+            protein = int(require_input("- Required Protein: "))
+            break
+        except ValueError:
+            print("Protein must be a number!")
+
+    vitamins = require_input("- Required Vitamins (separated by comma): ")
     vitamins_list = [v.strip().upper() for v in vitamins.split(",") if v.strip()]
 
     # define each dietary need using dictionary
@@ -102,6 +122,8 @@ def get_input():
         "protein": protein,
         "vitamins": vitamins_list
     }
+    # generate a random beneficiary id
+    beneficiary_id = manager.generate_id()
 
     return Beneficiary(beneficiary_id, name, contact_info, needs)
 
