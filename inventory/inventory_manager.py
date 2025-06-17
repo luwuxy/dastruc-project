@@ -12,7 +12,7 @@ class FoodItem:
         self.protein = protein
         self.vitamins = vitamins
         self.fats = fats
-        self.quantity = quantity
+        self._quantity = quantity
     
     def setQuantity(self, quantity = 1): 
         self._quantity = quantity
@@ -30,7 +30,7 @@ class FoodItem:
         return (f"ID: {self.getID()} \n"
             f"Name: {self.name} \n"
             f"Expiry: {self.expiry.date()} \n"
-            f"Quantity: {self.quantity} \n"
+            f"Quantity: {self.getQuantity()} \n"
             f"Calories: {self.calories} \n"
             f"Protein: {self.protein} \n"
             f"Vitamins: {self.vitamins} \n"
@@ -44,6 +44,9 @@ class Inventory:
 
     #function for adding item to inventory
     def add_item(self,id, name, expiry, calories, protein, vitamins, fats, quantity): 
+        if id in self.items:
+            return f"Item ID '{id}' already exists. Please use a unique ID."
+
         newItem = FoodItem(name, expiry, calories, protein, vitamins, fats, quantity)
         newItem.setID(id)
         self.items[newItem.getID()] = newItem #the food item created gets added to the inventory dictionary with the ITEM ID as
@@ -86,7 +89,13 @@ class Inventory:
         fats = int(input("  Fats: ")) 
         vits = input("Vitamins it is rich in(seperate it with comma)")
         vitamins = [v.strip().upper() for v in vits.split(",") if v.strip()] 
-        id =  input("Enter the food item ID to complete: ")
+        while True:
+            id = input("Enter a unique food item ID to complete: ").strip().upper()
+            if id in self.items:
+                print("❗ This ID already exists. Please enter a different one.")
+            else:
+                break
+
         return id.upper(), name.upper(), expiry, calories, protein, vitamins, fats, quantity
     
 
@@ -112,12 +121,27 @@ class Inventory:
         print(tabulate(table_data, headers=headers, tablefmt="grid"))
     
     def reduce_qty(self, qty_chosen, food_obj):
-        if qty_chosen > food_obj.quantity:
+        if qty_chosen > food_obj.getQuantity():
             return "Insufficient stock"
-        food_obj.quantity -= qty_chosen
+        food_obj.setQuantity(food_obj.getQuantity() - qty_chosen)
         return True
 
-    
+    def increase_qty(self, item_id, qty_to_add, expiry):
+        item = self.items.get(item_id)
+        if not item:
+            return f"Item ID {item_id} not found in inventory."
+        try:
+            expiry_date = datetime.strptime(expiry, "%Y-%m-%d")
+        except ValueError:
+            return "Invalid date format. Please use YYYY-MM-DD."
+
+        if item.expiry != expiry_date:
+            return (f"❗ Expiry date mismatch. Existing item expires on {item.expiry.date()}.\n"
+                    f"Please add it as a new batch.")
+
+        item.setQuantity(item.getQuantity() + qty_to_add)
+        return f"Restocked {qty_to_add} units of {item.name}. New quantity: {item.getQuantity()}"
+
         
 #hard coded - for testing purposes only!
  
