@@ -2,6 +2,7 @@
 from datetime import datetime
 from tabulate import tabulate ##this is to display inventory in table format (this is tentative, and will be removed 
 # if we decided to incorporate a GUI)
+import heapq
 
 #class for each inidivual food item
 class FoodItem:
@@ -41,6 +42,7 @@ class FoodItem:
 class Inventory:
     def __init__(self): #constructor
         self.items = {} #dictionary that stores all the food items
+        self.expiry_heap = []
 
     #function for adding item to inventory
     def add_item(self,id, name, expiry, calories, protein, vitamins, fats, quantity): 
@@ -51,6 +53,7 @@ class Inventory:
         newItem.setID(id)
         self.items[newItem.getID()] = newItem #the food item created gets added to the inventory dictionary with the ITEM ID as
         # its key and the specified infos as its values 
+        heapq.heappush(self.expiry_heap, (newItem.expiry, newItem.getID()))
         return f"{newItem.getID()}({name} added successfully!)"
 
     #function for searching a specific item in the inventory using ID
@@ -75,6 +78,10 @@ class Inventory:
         if not self.items:
             print("Inventory is empty.📦")
             return
+        
+        sorted_items = sorted(self.items.values(), key=lambda item: item.expiry)
+        self.display_table(sorted_items)
+
 
         self.display_table(self.items.values())        
 
@@ -120,12 +127,13 @@ class Inventory:
         headers = ["ID", "Name", "Expiry", "Quantity", "Fats", "Calories", "Protein", "Vitamins"]
         print(tabulate(table_data, headers=headers, tablefmt="grid"))
     
+    #reducing the stock of an item
     def reduce_qty(self, qty_chosen, food_obj):
         if qty_chosen > food_obj.getQuantity():
             return "Insufficient stock"
         food_obj.setQuantity(food_obj.getQuantity() - qty_chosen)
         return True
-
+    #updating the stock levels of an item with the same expiry date
     def increase_qty(self, item_id, qty_to_add, expiry):
         item = self.items.get(item_id)
         if not item:
@@ -135,14 +143,38 @@ class Inventory:
         except ValueError:
             return "Invalid date format. Please use YYYY-MM-DD."
 
-        if item.expiry != expiry_date:
+        if item.expiry != expiry_date: 
             return (f"❗ Expiry date mismatch. Existing item expires on {item.expiry.date()}.\n"
                     f"Please add it as a new batch.")
 
         item.setQuantity(item.getQuantity() + qty_to_add)
         return f"Restocked {qty_to_add} units of {item.name}. New quantity: {item.getQuantity()}"
+    
+    
+    #function for deleting the expired items every time the program starts
+    def remove_expired_items(self):
+        today = datetime.today().date()
+        removed = []
+        while self.expiry_heap and self.expiry_heap[0][0].date() <= today:
+            expiry, item_id = heapq.heappop(self.expiry_heap)
+            if item_id in self.items:
+                item = self.items.pop(item_id)
+                removed.append((item_id, item.name, expiry.date()))
+    
+        if removed:
+            print("🗑️ The following expired items were removed from the inventory:")
+            for item_id, name, exp in removed:
+                print(f" - {item_id} ({name}) [Expired: {exp}]")
+        else:
+            print("🟢 No expired items found.")
+    
 
-        
+
+    
+
+
+
+ """       
 #hard coded - for testing purposes only!
  
 inventory = Inventory()
@@ -169,7 +201,7 @@ else:
 ##searching for items with ITEMID
 print(inventory.search_item_by_id("CHK25002"))
 print(inventory.search_item_by_id("IWANNAKMS"))
-
+"""
 
 
 
