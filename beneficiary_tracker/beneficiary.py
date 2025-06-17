@@ -4,10 +4,14 @@ class Beneficiary:
         self.name = name
         self.contact_info = contact_info
         self.needs = {
+            "fats": needs["fats"],
             "calories": needs["calories"],
             "protein": needs["protein"],
             "vitamins": needs["vitamins"]
         }
+    
+    def get_needs(self):
+        return self.needs
 
     def to_dict(self):
         return {
@@ -31,6 +35,7 @@ class Beneficiary:
                 f"Name: {self.name}\n"
                 f"Contact Info: {self.contact_info}\n"
                 f"Dietary Needs:\n"
+                f"- Fats: {self.needs["fats"]}\n"
                 f"- Calories: {self.needs["calories"]}\n"
                 f"- Protein: {self.needs["protein"]}\n"
                 f"- Vitamins: {", ".join(self.needs["vitamins"])}")
