@@ -30,12 +30,13 @@ class BeneficiaryManager:
                     beneficiary.id,
                     beneficiary.name,
                     beneficiary.contact_info,
+                    beneficiary.needs["fats"],
                     beneficiary.needs["calories"],
                     beneficiary.needs["protein"],
                     ", ".join(beneficiary.needs["vitamins"])
                 ])
             
-            headers = ["ID", "Name", "Contact Info", "Required Calories", "Required Protein", "Required Vitamins"]
+            headers = ["ID", "Name", "Contact Info", "Required Fats", "Required Calories", "Required Protein", "Required Vitamins"]
             print(tabulate(table, headers=headers, tablefmt="grid"), "\n")
 
     # search for beneficiaries according to user input (any category)
@@ -46,6 +47,7 @@ class BeneficiaryManager:
             if (value == b.id.lower() or
                 value == b.name.lower() or
                 value == b.contact_info.lower() or
+                value == str(b.needs["fats"]).lower() or
                 value == str(b.needs["calories"]).lower() or
                 value == str(b.needs["protein"]).lower() or
                 any(value == v.lower() for v in b.needs["vitamins"])):
@@ -62,12 +64,13 @@ class BeneficiaryManager:
                     beneficiary.id,
                     beneficiary.name,
                     beneficiary.contact_info,
+                    beneficiary.needs["fats"],
                     beneficiary.needs["calories"],
                     beneficiary.needs["protein"],
                     ", ".join(beneficiary.needs["vitamins"])
                 ])
         
-        headers = ["ID", "Name", "Contact Info", "Required Calories", "Required Protein", "Required Vitamins"]
+        headers = ["ID", "Name", "Contact Info", "Required Fats", "Required Calories", "Required Protein", "Required Vitamins"]
         print(tabulate(table, headers=headers, tablefmt="grid"), "\n")
     
     # save the beneficiary data to a JSON file
