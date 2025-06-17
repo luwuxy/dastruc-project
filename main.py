@@ -1,6 +1,7 @@
 from beneficiary_tracker.beneficiary import Beneficiary
 from beneficiary_tracker.beneficiary_manager import BeneficiaryManager
 from inventory.inventory_manager import Inventory
+from inventory.inventory_manager import FoodItem
 from distributor.distributor import Distributor
 
 manager = BeneficiaryManager()
@@ -37,11 +38,65 @@ Welcome to the Food Bank System!
 
 
 def inventory_menu():
+    ####NOT DONE
     while True:
-        # put your inventory menu here, mas maganda if ibundle na natin lahat dito sa
-        # main class yung interface para mas malinis yung ibang files. - Mar
+        print("\n--- MAIN MENU ---")
+        print("1. Display Inventory")
+        print("2. Add Item")
+        print("3. Increase an Item")
+        print("4. Search for an Item")
+        print("5. Distribute an Item")
+        print("6. Exit")
+    
+        option = input("Select an option (1-6): ").strip()
 
-        option = input("Please choose an option: ")
+        if option == "1":
+            inventory.remove_expired_items()
+            inventory.display_inventory()
+
+        elif option == "2":
+            id, name, expiry, calories, protein, vitamins, fats, quantity = inventory.get_details()
+            message = inventory.add_item(id, name, expiry, calories, protein, vitamins, fats, quantity)
+            
+        elif option == "3":
+            item_id = input("Enter the ITEM ID to update: ").strip().upper()
+            try:
+                qty_to_add = int(input("Enter quantity to add: "))
+            except ValueError:
+                print("Invalid quantity.")
+                continue
+            expiry = input("Enter expiry date (YYYY-MM-DD): ").strip()
+            message = inventory.increase_qty(item_id, qty_to_add, expiry)
+        
+
+        elif option == "4":
+            sub_option = input("Search by: 1. ITEM ID  |  2. VITAMINS (Enter 1 or 2): ").strip()
+            if sub_option == "1":
+                item_id = input("Enter ITEM ID: ").strip().upper()
+                result = inventory.search_item_by_id(item_id)
+                print(result if isinstance(result, str) else result.__str__())
+        elif sub_option == "2":
+            vitamin = input("Enter a vitamin/mineral (e.g., C or D): ").strip()
+            results = inventory.search_item_by_vitamins(vitamin)
+            if results:
+                print("🔎 Search results:")
+                inventory.display_table(results)
+            else:
+                print("❌ No item found with that vitamin.")
+        else:
+            print("❗ Invalid choice.")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def beneficiary_menu():
