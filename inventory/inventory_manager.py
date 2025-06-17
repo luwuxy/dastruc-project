@@ -1,7 +1,8 @@
-# %%
+
 from datetime import datetime
 from tabulate import tabulate ##this is to display inventory in table format (this is tentative, and will be removed 
 # if we decided to incorporate a GUI)
+
 #class for each inidivual food item
 class FoodItem:
     def __init__(self, name, expiry, calories, protein, vitamins, fats, quantity=1): 
@@ -12,6 +13,12 @@ class FoodItem:
         self.vitamins = vitamins
         self.fats = fats
         self.quantity = quantity
+    
+    def setQuantity(self, quantity = 1): 
+        self._quantity = quantity
+
+    def getQuantity(self): 
+        return self._quantity
 
     def setID(self, id): 
         self._id = id
@@ -28,10 +35,12 @@ class FoodItem:
             f"Protein: {self.protein} \n"
             f"Vitamins: {self.vitamins} \n"
             f"Fats: {self.fats}")
+    
+
 #Inventory manager class
 class Inventory:
     def __init__(self): #constructor
-        self.items = {} #dictionary that stores all the food items (the actual inventory, in short)
+        self.items = {} #dictionary that stores all the food items
 
     #function for adding item to inventory
     def add_item(self,id, name, expiry, calories, protein, vitamins, fats, quantity): 
@@ -57,8 +66,6 @@ class Inventory:
                     results.append(val)
             if results: 
                 return results
-            
-
     
     #function for displaying the inventory            
     def display_inventory(self):
@@ -103,6 +110,12 @@ class Inventory:
         
         headers = ["ID", "Name", "Expiry", "Quantity", "Fats", "Calories", "Protein", "Vitamins"]
         print(tabulate(table_data, headers=headers, tablefmt="grid"))
+    
+    def reduce_qty(self, qty_chosen, food_obj):
+        if qty_chosen > food_obj.quantity:
+            return "Insufficient stock"
+        food_obj.quantity -= qty_chosen
+        return True
 
     
         
