@@ -174,36 +174,6 @@ class Inventory:
 
 
 
- """       
-#hard coded - for testing purposes only!
- 
-inventory = Inventory()
-#adding items to inventory
-inventory.add_item("VEG25001", "Brocolli", "2025-06-10", 500, 150, "C,D,B12", 30, 20)
-inventory.add_item("CHK25002", "Chicken", "2025-09-10", 800, 150, "A, B", 20, 50)
-inventory.add_item("BRD25003", "White bread", "2028-09-11", 500, 150, "A", 10, 9)
-#displaying
-inventory.display_inventory() 
-##searching for items with vitamin D
-results = inventory.search_item_by_vitamins("a")
-if results:
-    print("RESULTS:")
-    inventory.display_table(results)
-else:
-    print("No item found with that vitamin")
-##searching for items with vitamin K
-result2 = inventory.search_item_by_vitamins("k")
-if result2:
-    print("RESULTS:")
-    inventory.display_table(result2)
-else:
-    print("No item found with that vitamin")
-##searching for items with ITEMID
-print(inventory.search_item_by_id("CHK25002"))
-print(inventory.search_item_by_id("IWANNAKMS"))
-"""
-
-
 
 
 
