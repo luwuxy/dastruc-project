@@ -77,7 +77,7 @@ class Inventory:
     #function for displaying the inventory            
     def display_inventory(self):
         if not self.items:
-            print("Inventory is empty.📦")
+            print("Inventory is empty.")
             return
         
         #if inventory is not empty, sort it by expiry date
@@ -152,7 +152,7 @@ class Inventory:
     def get_details(self):
         name = input("Enter the name of the food item: ").strip()
         while not name:
-            print("❗ Name cannot be empty.")
+            print("Name cannot be empty.")
             name = input("Enter the name of the food item: ").strip()
 
         # Validate quantity
@@ -163,7 +163,7 @@ class Inventory:
                     raise ValueError
                 break
             except ValueError:
-                print("❗ Please enter a valid positive integer for quantity.")
+                print("Please enter a valid positive integer for quantity.")
 
         # Validate expiry date
         while True:
@@ -172,7 +172,7 @@ class Inventory:
                 datetime.strptime(expiry, "%Y-%m-%d")
                 break
             except ValueError:
-                print("❗ Invalid date format. Please use YYYY-MM-DD.")
+                print("Invalid date format. Please use YYYY-MM-DD.")
 
         print("Nutritional Information:")
 
@@ -184,7 +184,7 @@ class Inventory:
                     raise ValueError
                 break
             except ValueError:
-                print("❗ Please enter a non-negative integer for calories.")
+                print("Please enter a non-negative integer for calories.")
 
          # Validate protein
         while True:
@@ -194,7 +194,7 @@ class Inventory:
                     raise ValueError
                 break
             except ValueError:
-                print("❗ Please enter a non-negative integer for protein.")
+                print("Please enter a non-negative integer for protein.")
 
         # Validate fats
         while True:
@@ -204,21 +204,21 @@ class Inventory:
                     raise ValueError
                 break
             except ValueError:
-                print("❗ Please enter a non-negative integer for fats.")
+                print("Please enter a non-negative integer for fats.")
 
     # Handle vitamins list
         vits = input("Vitamins it is rich in (separate with commas): ")
         vitamins = [v.strip().upper() for v in vits.split(",") if v.strip()]
         if not vitamins:
-            print("⚠️  No vitamins entered. Proceeding with an empty list.")
+            print("No vitamins entered. Proceeding with an empty list.")
 
     # Unique ID check
         while True:
             item_id = input("Enter a unique food item ID to complete: ").strip().upper()
             if not item_id:
-                print("❗ Item ID cannot be empty.")
+                print("Item ID cannot be empty.")
             elif item_id in self.items:
-                print("❗ This ID already exists. Please enter a different one.")
+                print("This ID already exists. Please enter a different one.")
             else:
                 break
 
@@ -239,7 +239,7 @@ class Inventory:
                 }
         with open(filename, "w") as f:
             json.dump(data, f, indent=4)  # write to file in a readable format
-        print(f"✅ Inventory saved to {filename}")
+        print(f"Inventory saved to {filename}")
 
 #load inventory
     def load_data(self, filename="inventory.json"):
@@ -257,9 +257,9 @@ class Inventory:
                     item_data["fats"],
                     item_data["quantity"]
                 )
-            print(f"📥 Inventory loaded from {filename}")
+            print(f"Inventory loaded from {filename}")
         except FileNotFoundError:
-            print(f"⚠️ {filename} not found. Starting with an empty inventory.")
+            print(f"{filename} not found. Starting with an empty inventory.")
 
 
 
