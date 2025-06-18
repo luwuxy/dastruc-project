@@ -117,7 +117,7 @@ class Inventory:
                 item.getID(),
                 item.name,
                 item.expiry.date(),
-                item.quantity,
+                item.getQuantity(),
                 item.fats,
                 item.calories,
                 item.protein,
