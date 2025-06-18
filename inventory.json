@@ -9,5 +9,18 @@
         ],
         "fats": 100,
         "quantity": 100
+    },
+    "ITEMID3424": {
+        "name": "CABBE",
+        "expiry": "2025-10-15",
+        "calories": 100,
+        "protein": 100,
+        "vitamins": [
+            "CALCIUM",
+            "A",
+            "B"
+        ],
+        "fats": 100,
+        "quantity": 100
     }
 }
