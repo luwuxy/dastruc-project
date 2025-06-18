@@ -29,7 +29,7 @@ class BeneficiaryManager:
                 table.append([
                     beneficiary.id,
                     beneficiary.name,
-                    beneficiary.contact_info,
+                    beneficiary.get_contact_info(),
                     beneficiary.needs["fats"],
                     beneficiary.needs["calories"],
                     beneficiary.needs["protein"],
@@ -46,7 +46,7 @@ class BeneficiaryManager:
         for b in self.beneficiaries.values():
             if (value == b.id.lower() or
                 value == b.name.lower() or
-                value == b.contact_info.lower() or
+                value == b.get_contact_info().lower() or
                 value == str(b.needs["fats"]).lower() or
                 value == str(b.needs["calories"]).lower() or
                 value == str(b.needs["protein"]).lower() or
@@ -63,7 +63,7 @@ class BeneficiaryManager:
                 table.append([
                     beneficiary.id,
                     beneficiary.name,
-                    beneficiary.contact_info,
+                    beneficiary.get_contact_info(),
                     beneficiary.needs["fats"],
                     beneficiary.needs["calories"],
                     beneficiary.needs["protein"],
