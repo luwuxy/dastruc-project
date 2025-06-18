@@ -225,7 +225,7 @@ class Inventory:
         return item_id, name.upper(), expiry, calories, protein, vitamins, fats, quantity
     
 #save inventory
-    def save_to_file(self, filename="inventory.json"):
+    def save_data(self, filename="inventory.json"):
         data = {}
         for item_id, item in self.items.items():
             data[item_id] = {
@@ -242,7 +242,7 @@ class Inventory:
         print(f"✅ Inventory saved to {filename}")
 
 #load inventory
-    def load_from_file(self, filename="inventory.json"):
+    def load_data(self, filename="inventory.json"):
         try:
             with open(filename, "r") as f:
                 data = json.load(f)  # read the file and convert back into a dictionary

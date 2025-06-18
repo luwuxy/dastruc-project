@@ -11,6 +11,7 @@ inventory = Inventory()
 
 def main_menu():
     manager.load_data("beneficiaries.json")
+    inventory.load_data("inventory.json")
 
     while True:
         print("""
@@ -36,9 +37,11 @@ Welcome to the Food Bank System!
             print("That's not a valid option!")
     
     manager.save_data("beneficiaries.json")
+    inventory.save_data("inventory.json")
 
 
 def inventory_menu():
+    
     while True:
         print("\n--- MAIN MENU ---")
         print("1. Display Inventory")
@@ -52,11 +55,13 @@ def inventory_menu():
         if option == "1":
             inventory.remove_expired_items()
             inventory.display_inventory()
+            inventory.save_data("inventory.json")
 
         elif option == "2":
             id, name, expiry, calories, protein, vitamins, fats, quantity = inventory.get_details()
             message = inventory.add_item(id, name, expiry, calories, protein, vitamins, fats, quantity)
             print(message)
+            inventory.save_data("inventory.json")
 
         elif option == "3":
             item_id = input("Enter the ITEM ID to restock: ").strip().upper()
@@ -84,6 +89,7 @@ def inventory_menu():
 
             message = inventory.increase_qty(item_id, qty_to_add, expiry)
             print(message)
+            inventory.save_data("inventory.json")
 
         elif option == "4":
             sub_option = input("Search by: 1. ITEM ID  |  2. VITAMINS (Enter 1 or 2): ").strip()
@@ -91,6 +97,7 @@ def inventory_menu():
             if sub_option == "1":
                 item_id = input("Enter ITEM ID: ").strip()
                 print(inventory.search_item_by_id(item_id))
+                
 
             elif sub_option == "2":
                 vitamin = input("Enter a vitamin/mineral (e.g., C or D): ").strip()
@@ -100,6 +107,7 @@ def inventory_menu():
                     inventory.display_table(res)
                 else:
                     print("❌ No item found with that vitamin.")
+            
 
 
         elif option == "5":
