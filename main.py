@@ -277,21 +277,4 @@ def get_input():
 
 # main call function
 if __name__ == "__main__":
-    inventory.add_item("VEG25001", "Broccoli", "2025-06-10", 3, 55, ["C", "K"], 4, 25)
-    inventory.add_item("FRU25002", "Banana", "2025-06-12", 1, 90, ["B6", "C"], 1, 40)
-    inventory.add_item("CHK25003", "Chicken Breast", "2025-07-01", 8, 165, ["B12", "D"], 31, 30)
-    inventory.add_item("RCE25004", "White Rice", "2026-12-31", 1, 200, ["B1"], 4, 100)
-    inventory.add_item("BRD25005", "Whole Wheat Bread", "2025-06-30", 2, 120, ["B", "E"], 5, 20)
-    inventory.add_item("MLK25006", "Powdered Milk", "2025-09-15", 5, 100, ["A", "D", "B12"], 6, 15)
-    inventory.add_item("EGG25007", "Egg", "2025-06-25", 5, 70, ["D", "B12"], 6, 60)
-    inventory.add_item("VGT25008", "Malunggay Leaves", "2025-06-08", 1, 35, ["A", "C", "E"], 3, 10)
-    inventory.add_item("FIS25009", "Canned Tuna", "2026-01-20", 5, 190, ["D", "B12"], 20, 35)
-    inventory.add_item("LEG25010", "Lentils", "2026-03-01", 1, 230, ["B9", "Iron"], 18, 40)
-    inventory.add_item("VEG25011", "Carrots", "2025-06-15", 0, 41, ["A", "K"], 1, 50)
-    inventory.add_item("OIL25012", "Vegetable Oil", "2025-12-10", 14, 120, [], 0, 20)
-    inventory.add_item("APP25013", "Apple", "2025-06-09", 0, 95, ["C"], 0, 30)
-    inventory.add_item("BRN25014", "Brown Rice", "2026-10-01", 2, 215, ["B3", "Magnesium"], 5, 60)
-
-
-
     main_menu()
