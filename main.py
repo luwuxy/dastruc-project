@@ -48,12 +48,13 @@ def inventory_menu():
 Inventory Menu
 1. Display Inventory
 2. Add Item
-3. Increase quantity of item
-4. Search for an item
-5. Back to home menu
+3. Delete Item              
+4. Increase quantity of item
+5. Search for an item
+6. Back to home menu
 [==================================]""")
 
-        option = input("Select an option (1-5):").strip()
+        option = input("Select an option (1-6):").strip()
 
         if option == "1":
             inventory.remove_expired_items()
@@ -66,7 +67,19 @@ Inventory Menu
             print(message)
             inventory.save_data("inventory.json")
 
-        elif option == "3":
+        elif option == "3": 
+             while True:
+                item_id = input("Enter ITEM ID to delete: ").strip()
+                if not item_id:
+                    print("❗ Please enter a valid ITEM ID.")
+                    continue  # Keep asking if input is blank
+                print(inventory.delete_item(item_id))
+                inventory.save_data("inventory.json")
+                break 
+                    
+
+
+        elif option == "4":
             item_id = input("Enter the ITEM ID to restock: ").strip().upper()
 
             if item_id not in inventory.items:
@@ -94,7 +107,7 @@ Inventory Menu
             print(message)
             inventory.save_data("inventory.json")
 
-        elif option == "4":
+        elif option == "5":
             sub_option = input("Search by: 1. ITEM ID  |  2. VITAMINS (Enter 1 or 2): ").strip()
 
             if sub_option == "1":
@@ -113,7 +126,7 @@ Inventory Menu
             
 
 
-        elif option == "5":
+        elif option == "6":
             main_menu()            
             break
         

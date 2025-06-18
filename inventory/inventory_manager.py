@@ -54,6 +54,15 @@ class Inventory:
         #its key and the the food object itself as the value 
         heapq.heappush(self.expiry_heap, (newItem.expiry, newItem.getID())) #once added, push the added item's ID and expiry date to the heap
         return f"{newItem.getID()}({name} added successfully!)"
+    
+    #function for deleting an item from the inventory
+    def delete_item(self, id):
+        id = id.upper()  
+        if id in self.items: #if it exists, delete it
+            del self.items[id]
+            return f"Item '{id}' has been deleted from inventory."
+        return f"❌ Item '{id}' not found in inventory."
+
 
     #function for searching a specific item using item ID
     def search_item_by_id(self, targetID):
@@ -118,7 +127,7 @@ class Inventory:
         item = self.items.get(item_id)
         if not item:
             return f"Item ID {item_id} not found in inventory."
-        try:
+        try: #check if the expiry date inputted is valid
             expiry_date = datetime.strptime(expiry, "%Y-%m-%d")
         except ValueError:
             return "Invalid date format. Please use YYYY-MM-DD."
@@ -151,7 +160,7 @@ class Inventory:
 #function for getting food item details (for adding item) with input validation
     def get_details(self):
         name = input("Enter the name of the food item: ").strip()
-        while not name:
+        while not name: #continue asking, if user doesnt enter anything
             print("Name cannot be empty.")
             name = input("Enter the name of the food item: ").strip()
 
@@ -160,7 +169,7 @@ class Inventory:
             try:
                 quantity = int(input("Enter quantity: "))
                 if quantity <= 0:
-                    raise ValueError
+                    raise ValueError #raise an error if its a negative number
                 break
             except ValueError:
                 print("Please enter a valid positive integer for quantity.")
@@ -207,9 +216,10 @@ class Inventory:
                 print("Please enter a non-negative integer for fats.")
 
     # Handle vitamins list
-        vits = input("Vitamins/Minerals it is rich in (separate with commas): ")
-        vitamins = [v.strip().upper() for v in vits.split(",") if v.strip()]
-        if not vitamins:
+        vits = input("  Vitamins/Minerals it is rich in (separate with commas): ")
+        #split it into indiv elements with every comma, remove space, turn it into uppercase and put the result inside a list
+        vitamins = [v.strip().upper() for v in vits.split(",") if v.strip()] 
+        if not vitamins: #if no input, print:
             print("No vitamins/Minerals entered. Proceeding with an empty list.")
 
     # Unique ID check
@@ -230,7 +240,7 @@ class Inventory:
         for item_id, item in self.items.items():
             data[item_id] = {
                 "name": item.name,
-                "expiry": item.expiry.strftime("%Y-%m-%d"),  # convert date to string
+                "expiry": item.expiry.strftime("%Y-%m-%d"),  # convert date to string so it can be read by a json file
                 "calories": item.calories,
                 "protein": item.protein,
                 "vitamins": item.vitamins,
