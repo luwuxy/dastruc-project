@@ -3,6 +3,7 @@ from beneficiary_tracker.beneficiary_manager import BeneficiaryManager
 from inventory.inventory_manager import Inventory
 from inventory.inventory_manager import FoodItem
 from distributor.distributor import Distributor
+from datetime import datetime
 
 manager = BeneficiaryManager()
 inventory = Inventory()
@@ -23,7 +24,7 @@ Welcome to the Food Bank System!
         option = input("Please choose an option: ")
 
         if option == "1":
-            print("Nothing yet")
+            inventory_menu()
         elif option == "2":
             beneficiary_menu()
         elif option == "3":
@@ -38,17 +39,15 @@ Welcome to the Food Bank System!
 
 
 def inventory_menu():
-    ####NOT DONE
     while True:
         print("\n--- MAIN MENU ---")
         print("1. Display Inventory")
         print("2. Add Item")
         print("3. Increase an Item")
         print("4. Search for an Item")
-        print("5. Distribute an Item")
-        print("6. Exit")
-    
-        option = input("Select an option (1-6): ").strip()
+        print("5. Back to home menu")
+
+        option = input("Select an option (1-5):").strip()
 
         if option == "1":
             inventory.remove_expired_items()
@@ -57,34 +56,68 @@ def inventory_menu():
         elif option == "2":
             id, name, expiry, calories, protein, vitamins, fats, quantity = inventory.get_details()
             message = inventory.add_item(id, name, expiry, calories, protein, vitamins, fats, quantity)
-            
+            print(message)
+
         elif option == "3":
-            item_id = input("Enter the ITEM ID to update: ").strip().upper()
-            try:
-                qty_to_add = int(input("Enter quantity to add: "))
-            except ValueError:
-                print("Invalid quantity.")
+            item_id = input("Enter the ITEM ID to restock: ").strip().upper()
+
+            if item_id not in inventory.items:
+                print(f"❌ Item ID '{item_id}' does not exist in the inventory.")
                 continue
-            expiry = input("Enter expiry date (YYYY-MM-DD): ").strip()
+
+            while True:
+                try:
+                    qty_to_add = int(input("Enter quantity to add: "))
+                    if qty_to_add <= 0:
+                        raise ValueError
+                    break
+                except ValueError:
+                    print("❗ Please enter a valid positive integer.")
+
+            while True:
+                expiry = input("Enter expiry date for new stock (YYYY-MM-DD): ").strip()
+                try:
+                    datetime.strptime(expiry, "%Y-%m-%d")
+                    break
+                except ValueError:
+                    print("❗ Invalid date format. Please use YYYY-MM-DD.")
+
             message = inventory.increase_qty(item_id, qty_to_add, expiry)
-        
+            print(message)
 
         elif option == "4":
             sub_option = input("Search by: 1. ITEM ID  |  2. VITAMINS (Enter 1 or 2): ").strip()
+
             if sub_option == "1":
-                item_id = input("Enter ITEM ID: ").strip().upper()
-                result = inventory.search_item_by_id(item_id)
-                print(result if isinstance(result, str) else result.__str__())
-        elif sub_option == "2":
-            vitamin = input("Enter a vitamin/mineral (e.g., C or D): ").strip()
-            results = inventory.search_item_by_vitamins(vitamin)
-            if results:
-                print("🔎 Search results:")
-                inventory.display_table(results)
-            else:
-                print("❌ No item found with that vitamin.")
+                item_id = input("Enter ITEM ID: ").strip()
+                print(inventory.search_item_by_id(item_id))
+
+            elif sub_option == "2":
+                vitamin = input("Enter a vitamin/mineral (e.g., C or D): ").strip()
+                res = inventory.search_item_by_vitamins(vitamin)
+                if res:
+                    print("🔎 Search results:")
+                    inventory.display_table(res)
+                else:
+                    print("❌ No item found with that vitamin.")
+
+
+        elif option == "5":
+            main_menu()            
+            break
+        
         else:
-            print("❗ Invalid choice.")
+            print("❗ Invalid search option.")
+
+
+
+    
+    
+    
+
+
+    
+    
 
 
 
@@ -256,7 +289,7 @@ if __name__ == "__main__":
     inventory.add_item("LEG25010", "Lentils", "2026-03-01", 1, 230, 18, ["B9", "Iron"], 40)
     inventory.add_item("VEG25011", "Carrots", "2025-06-15", 0, 41, 1, ["A", "K"], 50)
     inventory.add_item("OIL25012", "Vegetable Oil", "2025-12-10", 14, 120, 0, [], 20)
-    inventory.add_item("APP25013", "Apple", "2025-06-09", 0, 95, 0, ["C"], 30)
+    inventory.add_item("APP25013", "Apple", "2025-06-09", 0, 95, 0, ["C"], 30)  
     inventory.add_item("BRN25014", "Brown Rice", "2026-10-01", 2, 215, 5, ["B3", "Magnesium"], 60)
 
 
