@@ -82,28 +82,6 @@ class Inventory:
         #if inventory is not empty, sort it by expiry date
         sorted_items = sorted(self.items.values(), key=lambda item: item.expiry)
         self.display_table(sorted_items) #and display it in a table
-     
-    #function for getting food item details (for adding item)
-    def get_details(self):
-        name =  input("Enter the name of the food item:")
-        quantity = int(input("Enter quantity:"))
-        expiry = input("Enter expiry date (YYYY-MM-DD):")
-        print("Nutritional Information:")
-        calories = int(input("Calories:"))
-        protein = int(input("Protein (grams):")) 
-        fats = int(input("Fats:")) 
-        vits = input("Vitamins it is rich in(seperate it with comma):")
-        #only include in the vitamins list after it has been splitted, removed spaces, and converted to uppercase
-        vitamins = [v.strip().upper() for v in vits.split(",") if v.strip()]
-        while True:
-            id = input("Enter a unique food item ID to complete: ").strip().upper()
-            if id in self.items:
-                print("This ID already exists. Please enter a different one.")
-                continue
-            else:
-                break
-
-        return id.upper(), name.upper(), expiry, calories, protein, vitamins, fats, quantity
     
 #function for displaying in table format
     def display_table(self, item_list): 
@@ -168,6 +146,82 @@ class Inventory:
                 print(f" - {item_id} ({name}) [Expired: {exp}]")
         else: #if empty, print:
             print("🟢 No expired items found.")
+    
+    #function for getting food item details (for adding item)
+    def get_details(self):
+        name = input("Enter the name of the food item: ").strip()
+        while not name:
+            print("❗ Name cannot be empty.")
+            name = input("Enter the name of the food item: ").strip()
+
+        # Validate quantity
+        while True:
+            try:
+                quantity = int(input("Enter quantity: "))
+                if quantity <= 0:
+                    raise ValueError
+                break
+            except ValueError:
+                print("❗ Please enter a valid positive integer for quantity.")
+
+        # Validate expiry date
+        while True:
+            expiry = input("Enter expiry date (YYYY-MM-DD): ").strip()
+            try:
+                datetime.strptime(expiry, "%Y-%m-%d")
+                break
+            except ValueError:
+                print("❗ Invalid date format. Please use YYYY-MM-DD.")
+
+        print("Nutritional Information:")
+
+        # Validate calories
+        while True:
+            try:
+                calories = int(input("  Calories: "))
+                if calories < 0:
+                    raise ValueError
+                break
+            except ValueError:
+                print("❗ Please enter a non-negative integer for calories.")
+
+         # Validate protein
+        while True:
+            try:
+                protein = int(input("  Protein (grams): "))
+                if protein < 0:
+                    raise ValueError
+                break
+            except ValueError:
+                print("❗ Please enter a non-negative integer for protein.")
+
+        # Validate fats
+        while True:
+            try:
+                fats = int(input("  Fats: "))
+                if fats < 0:
+                    raise ValueError
+                break
+            except ValueError:
+                print("❗ Please enter a non-negative integer for fats.")
+
+    # Handle vitamins list
+        vits = input("Vitamins it is rich in (separate with commas): ")
+        vitamins = [v.strip().upper() for v in vits.split(",") if v.strip()]
+        if not vitamins:
+            print("⚠️  No vitamins entered. Proceeding with an empty list.")
+
+    # Unique ID check
+        while True:
+            item_id = input("Enter a unique food item ID to complete: ").strip().upper()
+            if not item_id:
+                print("❗ Item ID cannot be empty.")
+            elif item_id in self.items:
+                print("❗ This ID already exists. Please enter a different one.")
+            else:
+                break
+
+        return item_id, name.upper(), expiry, calories, protein, vitamins, fats, quantity
     
 
 
