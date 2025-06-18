@@ -65,7 +65,6 @@ class Distributor:
         current_err = total_error(total)
         
         heap_copy = deepcopy(self.inventory.expiry_heap)
-        visited = set()
 
         # loop: keep adding the best item that reduces the total error
         while True:
