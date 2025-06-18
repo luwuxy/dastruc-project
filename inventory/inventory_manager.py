@@ -95,14 +95,14 @@ class Inventory:
                 item.getID(),
                 item.name,
                 item.expiry.date(),
-                item.getQuantity(),
-                item.fats,
                 item.calories,
                 item.protein,
-                item.vitamins
+                item.vitamins,
+                item.fats,
+                item.getQuantity()
             ])
         #set the type of attribute as the headers for better readability
-        headers = ["ID", "Name", "Expiry", "Quantity", "Fats", "Calories", "Protein", "Vitamins"]
+        headers = ["ID", "Name", "Expiry", "Calories", "Protein", "Vitamins", "Fats", "Quantity"]
         print(tabulate(table_data, headers=headers, tablefmt="grid"))
     
 #function for reducing the stock of an item
