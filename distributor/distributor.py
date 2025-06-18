@@ -2,6 +2,8 @@ import uuid
 import json
 from datetime import datetime
 from collections import Counter
+import heapq
+from copy import deepcopy
 
 class Distributor:
     # initialize with access to inventory and beneficiary manager
@@ -61,14 +63,23 @@ class Distributor:
 
         # current error score before adding anything
         current_err = total_error(total)
+        
+        heap_copy = deepcopy(self.inventory.expiry_heap)
+        visited = set()
 
         # loop: keep adding the best item that reduces the total error
         while True:
             best_item = None
             best_gain = 0.0
 
-            for item in self.inventory.items.values():
-                if item.getQuantity() == 0: continue
+            temp_heap = heap_copy[:]
+
+            while temp_heap:
+                expiry, item_id = heapq.heappop(temp_heap)
+                item = self.inventory.items.get(item_id)
+
+                if not item or item.getQuantity() == 0:
+                    continue
 
                 # simulate what happens if we add this item
                 sim = total.copy()
