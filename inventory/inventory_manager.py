@@ -36,7 +36,7 @@ class FoodItem:
             f"Quantity: {self.getQuantity()} \n"
             f"Calories: {self.calories} \n"
             f"Protein: {self.protein} \n"
-            f"Vitamins: {self.vitamins} \n"
+            f"Vitamins/Minerals: {self.vitamins} \n"
             f"Fats: {self.fats}")
     
 
@@ -103,7 +103,7 @@ class Inventory:
                 item.getQuantity()
             ])
         #set the type of attribute as the headers for better readability
-        headers = ["ID", "Name", "Expiry", "Calories", "Protein", "Vitamins", "Fats", "Quantity"]
+        headers = ["ID", "Name", "Expiry", "Calories", "Protein", "Vitamins/Minerals", "Fats", "Quantity"]
         print(tabulate(table_data, headers=headers, tablefmt="grid"))
     
 #function for reducing the stock of an item
@@ -148,7 +148,7 @@ class Inventory:
         else: #if empty, print:
             print("🟢 No expired items found.")
     
-#function for getting food item details (for adding item)
+#function for getting food item details (for adding item) with input validation
     def get_details(self):
         name = input("Enter the name of the food item: ").strip()
         while not name:
@@ -207,10 +207,10 @@ class Inventory:
                 print("Please enter a non-negative integer for fats.")
 
     # Handle vitamins list
-        vits = input("Vitamins it is rich in (separate with commas): ")
+        vits = input("Vitamins/Minerals it is rich in (separate with commas): ")
         vitamins = [v.strip().upper() for v in vits.split(",") if v.strip()]
         if not vitamins:
-            print("No vitamins entered. Proceeding with an empty list.")
+            print("No vitamins/Minerals entered. Proceeding with an empty list.")
 
     # Unique ID check
         while True:

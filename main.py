@@ -43,12 +43,15 @@ Welcome to the Food Bank System!
 def inventory_menu():
     
     while True:
-        print("\n--- MAIN MENU ---")
-        print("1. Display Inventory")
-        print("2. Add Item")
-        print("3. Increase an Item")
-        print("4. Search for an Item")
-        print("5. Back to home menu")
+        print("""
+[==================================]
+Inventory Menu
+1. Display Inventory
+2. Add Item
+3. Increase quantity of item
+4. Search for an item
+5. Back to home menu
+[==================================]""")
 
         option = input("Select an option (1-5):").strip()
 
