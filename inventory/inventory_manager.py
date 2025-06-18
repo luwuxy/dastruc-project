@@ -2,6 +2,7 @@
 from datetime import datetime #needed for expiry date
 from tabulate import tabulate #to display output in table formt
 import heapq #for priority queue
+import json
 
 #class for individual food items
 class FoodItem:
@@ -129,7 +130,7 @@ class Inventory:
         return f"Restocked {qty_to_add} units of {item.name}. New quantity: {item.getQuantity()}"
     
     
-    #function for deleting the expired items every time the program starts
+#function for deleting the expired items every time the program starts
     def remove_expired_items(self):
         today = datetime.today().date() #get the current date
         removed = [] #list for storing removed items
@@ -147,7 +148,7 @@ class Inventory:
         else: #if empty, print:
             print("🟢 No expired items found.")
     
-    #function for getting food item details (for adding item)
+#function for getting food item details (for adding item)
     def get_details(self):
         name = input("Enter the name of the food item: ").strip()
         while not name:
@@ -223,6 +224,43 @@ class Inventory:
 
         return item_id, name.upper(), expiry, calories, protein, vitamins, fats, quantity
     
+#save inventory
+    def save_to_file(self, filename="inventory.json"):
+        data = {}
+        for item_id, item in self.items.items():
+            data[item_id] = {
+                "name": item.name,
+                "expiry": item.expiry.strftime("%Y-%m-%d"),  # convert date to string
+                "calories": item.calories,
+                "protein": item.protein,
+                "vitamins": item.vitamins,
+                "fats": item.fats,
+                "quantity": item.getQuantity()
+                }
+        with open(filename, "w") as f:
+            json.dump(data, f, indent=4)  # write to file in a readable format
+        print(f"✅ Inventory saved to {filename}")
+
+#load inventory
+    def load_from_file(self, filename="inventory.json"):
+        try:
+            with open(filename, "r") as f:
+                data = json.load(f)  # read the file and convert back into a dictionary
+            for item_id, item_data in data.items():
+                self.add_item(
+                    item_id,
+                    item_data["name"],
+                    item_data["expiry"],
+                    item_data["calories"],
+                    item_data["protein"],
+                    item_data["vitamins"],
+                    item_data["fats"],
+                    item_data["quantity"]
+                )
+            print(f"📥 Inventory loaded from {filename}")
+        except FileNotFoundError:
+            print(f"⚠️ {filename} not found. Starting with an empty inventory.")
+
 
 
     
